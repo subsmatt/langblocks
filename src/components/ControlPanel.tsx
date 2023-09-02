@@ -1,36 +1,21 @@
 'use client';
-import { useSession, signIn, signOut } from "next-auth/react";
-// import { useContext } from "react";
-// import { ControlPanelContext } from "../context/ControlPanelContext";
+import { useControlPanelContext } from "@/context/ControlPanelContext";
+import WordType from "./WordType";
 import CardAdd from "./CardAdd";
-// import WordType from "./WordType";
 
 function ControlPanel() {
-    function LogInBtn(){
-        const { data: session } = useSession();
-        if (session) {
-            return (
-            <>
-                <button className="btn btn-outline-info float-end" onClick={() => signOut({callbackUrl: "/"})}>Sign out</button>
-                <p>Signed in as {session.user?.email}</p>
-            </>
-            );
-        }
-        return (
-            <>
-              {/* pass 2 additional args to force user to provide credentials */}
-              {/* <button className="btn btn-outline-info float-end" onClick={() => signIn("auth0", null, { prompt: "login" })}>Sign in</button> */}
-              <button className="btn btn-outline-info float-end" onClick={() => signIn("auth0")}>Sign in</button>
-            </>
-        );
-    }
+    const {searchQuery, setSearchQuery, searchType, setSearchType} = useControlPanelContext();
 
     return (
         <div className="flex flex-col md:flex-row">
             <div className="basis-1/4">
-                <LogInBtn/>
+                <WordType incShowAll={true} currentValue={searchType} eventHandler={setSearchType} />
             </div>
             <div className="basis-1/2">
+                <div className="">
+                    <input type="text" className="" placeholder="Search..." aria-label="Search" aria-describedby="basic-addon2" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
+                    <span className="" id="basic-addon2"><i className="fa fa-search"></i></span>
+                </div>
             </div>
             <div className="basis-1/4">
                 <CardAdd/>

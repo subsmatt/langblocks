@@ -1,8 +1,9 @@
+import { useControlPanelContext } from "@/context/ControlPanelContext";
 import { sampleData as data } from "../../data/sampleData.js";
 
 function CardList() {
-    const searchQuery: string = "";
-    const searchType: string = "";
+    const {searchQuery, searchType} = useControlPanelContext();
+
     const cardsData = data;
     return (
         <>          
@@ -18,7 +19,6 @@ function CardList() {
                         }
                     }).map(function(rec){                        
                         return (
-                            // <Card key={rec.id} rec={rec} />
                             <div key={rec.id} className="border border-zinc-300"><span className="font-bold">{rec.word}</span><p className="text-sm">{rec.desc}</p></div>
                         );
                     })
