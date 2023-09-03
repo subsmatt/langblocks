@@ -13,7 +13,7 @@ function ControlPanel() {
             </div>
             <div className="basis-1/2">
                 <div className="">
-                    <input type="text" className="" placeholder="Search..." aria-label="Search" aria-describedby="basic-addon2" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
+                    <input type="text" className="w-full" placeholder="Search..." aria-label="Search" aria-describedby="basic-addon2" value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)}/>
                     <span className="" id="basic-addon2"><i className="fa fa-search"></i></span>
                 </div>
             </div>
