@@ -1,20 +1,20 @@
-import { CardModalContext } from "../context/CardModalContext";
+import { useCardModalContext } from "../context/CardModalContext";
 //import { CardsContext } from "../context/CardsContext";
 import { useContext } from "react";
-import { ICard } from "@/types/card";
+import { ICard, IRecord } from "@/types/card";
 import { PencilSquareIcon, TrashIcon, StarIcon } from '@heroicons/react/24/outline';
 
 function Card(props: ICard) {
     const {rec} = props;
-    // const {
-    //     setModalShow, 
-    //     setModalCardId, 
-    //     setModalCardWord, 
-    //     setModalCardDesc, 
-    //     setModalCardWordType,
-    //     setModalCardTagIds,
-    //     setTagNamesNewValue
-    // } = useContext(CardModalContext);
+    const {
+        setModalShow, 
+        setModalCardId, 
+        setModalCardWord, 
+        setModalCardDesc, 
+        setModalCardWordType,
+        // setModalCardTagIds,
+        // setTagNamesNewValue
+    } = useCardModalContext(); //useContext(CardModalContext);
 
     // const {
     //     cardsData, 
@@ -25,15 +25,15 @@ function Card(props: ICard) {
     //     updateCard
     // } = useContext(CardsContext);
 
-    // function editCard(aoRec){
-    //     setModalCardId(aoRec.id);
-    //     setModalCardWord(aoRec.word);
-    //     setModalCardDesc(aoRec.desc);
-    //     setModalCardWordType(aoRec.type);
-    //     setModalCardTagIds(tagOnCardData.filter(r => r.cardId === aoRec.id).map(t => t.tagId));
-    //     setTagNamesNewValue("");
-    //     setModalShow(true);
-    // }
+    function editCard(aoRec: IRecord){
+        setModalCardId(aoRec.id);
+        setModalCardWord(aoRec.word);
+        setModalCardDesc(aoRec.desc);
+        setModalCardWordType(aoRec.type);
+        // setModalCardTagIds(tagOnCardData.filter(r => r.cardId === aoRec.id).map(t => t.tagId));
+        // setTagNamesNewValue("");
+        setModalShow(true);
+    }
 
     // function removeCard(id){
     //     if (confirm("Delete card?") === true) deleteCard(id);
@@ -105,10 +105,11 @@ function Card(props: ICard) {
                     <div className="text-sm">{rec.type}</div>
                     <div className="flex justify-end">
                         <span className="mx-2">
-                            <PencilSquareIcon className="h-4 w-4" aria-hidden="true" />
-                            {/* <a href="#" onClick={() => {editCard(rec);}}>
-                                <i className="fa fa-edit"/>
-                            </a> */}
+                            {/* <PencilSquareIcon className="h-4 w-4" aria-hidden="true" /> */}
+                            <a href="#" onClick={() => {editCard(rec);}}>
+                                {/* <i className="fa fa-edit"/> */}
+                                <PencilSquareIcon className="h-4 w-4" aria-hidden="true" />
+                            </a>
                         </span>
                         <span className="mx-2">
                             <TrashIcon className="h-4 w-4" aria-hidden="true" />

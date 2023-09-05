@@ -7,8 +7,8 @@ interface Props {
 interface ICardModalContextValues {
     modalShow: boolean,
     setModalShow: React.Dispatch<React.SetStateAction<boolean>>,
-    modalCardId: number,
-    setModalCardId: React.Dispatch<React.SetStateAction<number>>,
+    modalCardId: string,
+    setModalCardId: React.Dispatch<React.SetStateAction<string>>,
     modalCardWord: string,
     setModalCardWord: React.Dispatch<React.SetStateAction<string>>,
     modalCardDesc: string,
@@ -26,7 +26,7 @@ const Provider = CardModalContext.Provider;
 
 function CardModalProvider({children}: Props) {
     const [modalShow, setModalShow] = useState(false);
-    const [modalCardId, setModalCardId] = useState(0);
+    const [modalCardId, setModalCardId] = useState("0");
     const [modalCardWord, setModalCardWord] = useState("");
     const [modalCardDesc, setModalCardDesc] = useState("");
     const [modalCardWordType, setModalCardWordType] = useState("");
