@@ -1,0 +1,20 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url = env("MONGODB_CONNECTION_STRING")
+}
+
+model Cards {
+    id String @id @default(auto()) @map("_id") @db.ObjectId
+    lang String
+    word String
+    desc_lang String
+    desc String
+    type String
+    hits Int
+    examples String[]
+    iknowthis Boolean?
+}

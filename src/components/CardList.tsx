@@ -1,11 +1,17 @@
 import { useControlPanelContext } from "@/context/ControlPanelContext";
-import { sampleData as data } from "../../data/sampleData.js";
+//import { sampleData as data } from "../../data/sampleData.js";
 import Card from "./Card";
+import { useCardsContext } from "@/context/CardsContext";
 
 function CardList() {
     const {searchQuery, searchType} = useControlPanelContext();
+    
+    //// Use data from sampleData.js
+    //const cardsData = data;
 
-    const cardsData = data;
+    // Use data from CardsContext
+    const {cardsData} = useCardsContext();
+    
     return (
         <>          
             <div className="mt-2 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
@@ -20,7 +26,6 @@ function CardList() {
                         }
                     }).map(function(rec){                        
                         return (
-                            // <div key={rec.id} className="border border-zinc-300"><span className="font-bold">{rec.word}</span><p className="text-sm">{rec.desc}</p></div>
                             <Card key={rec.id} rec={rec} />
                         );
                     })
