@@ -9,6 +9,7 @@ datasource db {
 
 model Cards {
     id String @id @default(auto()) @map("_id") @db.ObjectId
+    cid String?
     lang String
     word String
     desc_lang String

@@ -22,10 +22,6 @@ function useGenCrudMethods(url: string, errorNotificationFn: (err: string) => vo
                 } else {
                     setData(initData);
                 }
-                // setTimeout(function(){
-                //     console.log(`sms>useGenCrudMethods: Load data - set init data...`);
-                //     setData(initData);
-                // }, 300);
             }
             catch (e){
                 console.log(`ERROR:${lsFuncName} `, e);
@@ -35,16 +31,64 @@ function useGenCrudMethods(url: string, errorNotificationFn: (err: string) => vo
         getData();
     }, [url, initData]);
 
-    function createRecord() {
-        console.log(`INFO>useGenCrudMethods createRecord...`);
+    function createRecord(url: string, createObject: IRecord) {
+        async function addData(){
+            try {
+                const newObject = {...createObject, id: undefined};
+                await axios.post(url, newObject);
+                setData(function(originalData){
+                    return [...originalData, createObject];
+                });                
+
+            } catch(e) {
+                const errorString = "ERROR in useGenCrudMethods: createCard"; //formatErrorString(e, url);
+                errorNotificationFn?.(errorString);
+                //validate();
+            }
+        }
+
+        addData();
     }
 
-    function updateRecord() {
+    function updateRecord(id: string, updateObject: IRecord) {
         console.log(`INFO>useGenCrudMethods updateRecord...`);
+        async function updateData(){
+            try {
+                await axios.put(`${url}/${id}`, updateObject);
+
+                setData(function(originalData){
+                    const originalRecord = originalData.find(rec => rec.id === id);
+                    const dataRecord = {...originalData, ...updateObject};
+                    
+                    return originalData.map(rec => rec.id === id ? dataRecord : rec);
+                });          
+            } catch (e) {
+                const errorString = "ERROR in useGenCrudMethods: updateCard"; //formatErrorString(e, url);
+                errorNotificationFn?.(errorString);
+                //validate();
+            }
+        }
+
+        updateData();
     }
 
-    function deleteRecord() {
+    function deleteRecord(id: string) {
         console.log(`INFO>useGenCrudMethods deleteRecord...`);
+        async function deleteData(){
+            try {
+                await axios.delete(`${url}/${id}`);
+
+                setData(function(originalData){
+                    return originalData.filter(rec => rec.id !== id);
+                });                
+            }  catch (e) {
+                const errorString = "ERROR in useGenCrudMethods: deleteCard"; //formatErrorString(e, url);
+                errorNotificationFn?.(errorString);
+                //validate();
+            }
+        }
+
+        deleteData();
     }
 
     return {data, error, createRecord, updateRecord, deleteRecord};

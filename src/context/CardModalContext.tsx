@@ -17,8 +17,6 @@ interface ICardModalContextValues {
     setModalCardWordType: React.Dispatch<React.SetStateAction<string>>,
     tagNamesNewValue: string, 
     setTagNamesNewValue: React.Dispatch<React.SetStateAction<string>>,
-    // modalCardTagIds: [string], 
-    // setModalCardTagIds: () => {}
 }
 
 const CardModalContext = createContext<undefined | ICardModalContextValues>(undefined);
@@ -31,7 +29,6 @@ function CardModalProvider({children}: Props) {
     const [modalCardDesc, setModalCardDesc] = useState("");
     const [modalCardWordType, setModalCardWordType] = useState("");
     const [tagNamesNewValue, setTagNamesNewValue] = useState("");
-    // const [modalCardTagIds, setModalCardTagIds] = useState([]);
 
     return (
         <Provider value={{modalShow, setModalShow, modalCardId, setModalCardId, modalCardWord, setModalCardWord, modalCardDesc, setModalCardDesc, modalCardWordType, setModalCardWordType, tagNamesNewValue, setTagNamesNewValue}}>

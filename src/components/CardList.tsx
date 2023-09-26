@@ -1,13 +1,9 @@
 import { useControlPanelContext } from "@/context/ControlPanelContext";
-//import { sampleData as data } from "../../data/sampleData.js";
 import Card from "./Card";
 import { useCardsContext } from "@/context/CardsContext";
 
 function CardList() {
     const {searchQuery, searchType} = useControlPanelContext();
-    
-    //// Use data from sampleData.js
-    //const cardsData = data;
 
     // Use data from CardsContext
     const {cardsData} = useCardsContext();
@@ -26,7 +22,7 @@ function CardList() {
                         }
                     }).map(function(rec){                        
                         return (
-                            <Card key={rec.id} rec={rec} />
+                            <Card key={rec.cid ?? rec.id} rec={rec} />
                         );
                     })
                 }

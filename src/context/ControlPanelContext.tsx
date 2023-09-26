@@ -53,10 +53,6 @@ function ControlPanelProvider({children}: Props) {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchType, setSearchType] = useState("");
 
-    // function handleSetSearchQuery(asSetSearchQuery: string) {
-    //     setSearchQuery(asSetSearchQuery);
-    // }
-
     return (
         <Provider value={{searchQuery, setSearchQuery, searchType, setSearchType}}>
             {children}

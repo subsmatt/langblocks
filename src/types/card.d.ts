@@ -1,5 +1,6 @@
 export interface IRecord {
     id: string,
+    cid: string | undefined,
     lang: string,
     word: string,
     desc_lang: string,

@@ -9,9 +9,9 @@ interface Props {
 interface ICardsContextValues {
     cardsData: IRecord[],
     //cardsDataError: "",
-    createCard: () => void,
-    updateCard: () => void,
-    deleteCard: () => void
+    createCard: (aoRec: IRecord, doneCallback: () => void) => void,
+    updateCard: (aoRec: IRecord, doneCallback: () => void) => void,
+    deleteCard: (asId: string, doneCallback: () => void) => void
 }
 
 const CardsContext = createContext<undefined | ICardsContextValues>(undefined);

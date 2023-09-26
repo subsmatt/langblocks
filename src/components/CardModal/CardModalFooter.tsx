@@ -1,4 +1,6 @@
+import { IRecord } from "@/types/card";
 import { useCardModalContext } from "../../context/CardModalContext";
+import { useCardsContext } from "@/context/CardsContext";
 
 function CardModalFooter(){
     const {
@@ -11,19 +13,29 @@ function CardModalFooter(){
         setModalCardDesc, 
         modalCardWordType, 
         setModalCardWordType
-        // modalCardTagIds,
-        // tagNamesNewValue
     } = useCardModalContext();
     
-    // const {createCard, updateCard} = useContext(CardsContext);
-    function createCard() {
-        console.log(`sms>CardModal createCard...`);
-        closeModal();
+    const schemaRecord: IRecord = {
+        id: "0", 
+        cid: modalCardId,
+        lang: "es",
+        word: modalCardWord,
+        desc_lang: "en",
+        desc: modalCardDesc,
+        type: modalCardWordType,
+        hits: 0,
+        examples: [],
+        iknowthis: false
     }
 
-    function updateCard() {
-        console.log(`sms>CardModal updateCard...`);
-        closeModal();
+    const { createCard, updateCard } = useCardsContext();
+
+    function createDoneCB() {
+        console.log(`createDoneCB...`)
+    }
+
+    function updateDoneCB() {
+        console.log(`updateDoneCB...`)
     }
 
     function closeModal() {
@@ -40,7 +52,10 @@ function CardModalFooter(){
                 <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 sm:ml-3 sm:w-auto"
-                    onClick={() => createCard()}
+                    onClick={() => {
+                        createCard(schemaRecord, createDoneCB);
+                        closeModal();
+                    }}
                 >
                     Add
                 </button>                
@@ -49,7 +64,10 @@ function CardModalFooter(){
                 <button
                 type="button"
                 className="inline-flex w-full justify-center rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 sm:ml-3 sm:w-auto"
-                onClick={() => updateCard()}
+                onClick={() => {
+                    updateCard({...schemaRecord, word: modalCardWord, desc: modalCardDesc, type: modalCardWordType}, updateDoneCB);
+                    closeModal();
+                }}
             >
                 Update
             </button> 
@@ -58,7 +76,6 @@ function CardModalFooter(){
                 type="button"
                 className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto"
                 onClick={() => closeModal()}
-                // ref={cancelButtonRef}
             >
                 Cancel
             </button>

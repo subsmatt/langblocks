@@ -1,16 +1,15 @@
 'use client';
-//import { useRef, useState } from 'react';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import { useCardModalContext } from '@/context/CardModalContext';
 
 function CardAdd(){
-    // const [open, setOpen] = useState(false);
-
-    // const cancelButtonRef = useRef(null);
-    const {setModalShow} = useCardModalContext();
+    const {setModalShow, setModalCardId, setModalCardWord, setModalCardDesc, setModalCardWordType} = useCardModalContext();
 
     function createCard(){
-        //setOpen(true);
+        setModalCardId("0");
+        setModalCardWord("");
+        setModalCardDesc("");
+        setModalCardWordType("noun");
         setModalShow(true);
     }
 
