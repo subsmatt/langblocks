@@ -34,7 +34,7 @@ function useGenCrudMethods(url: string, errorNotificationFn: (err: string) => vo
     function createRecord(url: string, createObject: IRecord) {
         async function addData(){
             try {
-                const newObject = {...createObject, id: undefined};
+                const newObject = {...createObject, mid: undefined};
                 await axios.post(url, newObject);
                 setData(function(originalData){
                     return [...originalData, createObject];

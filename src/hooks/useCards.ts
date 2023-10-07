@@ -25,7 +25,7 @@ function useCards(errorNotificationFn: (err: string) => void) {
         const lsFuncName = "useCard>updateCard";
         
         if (aoRec && aoRec.id) {
-            console.log(`call updateCardEntity id[${aoRec.id}] cid[${aoRec.cid}]...`);
+            console.log(`call updateCardEntity id[${aoRec.id}]...`);
             updateCardEntity(aoRec);
 
             if (doneCallback) {

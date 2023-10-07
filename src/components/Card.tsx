@@ -16,7 +16,7 @@ function Card(props: ICard) {
     const { deleteCard } = useCardsContext();
 
     function editCard(aoRec: IRecord){
-        setModalCardId(aoRec.cid ?? aoRec.id);
+        setModalCardId(aoRec.id);
         setModalCardWord(aoRec.word);
         setModalCardDesc(aoRec.desc);
         setModalCardWordType(aoRec.type);
@@ -31,7 +31,7 @@ function Card(props: ICard) {
     }
 
     return (
-        <div className="border border-zinc-300" key={rec.cid ?? rec.id}>
+        <div className="border border-zinc-300" key={rec.id}>
             <div className={`p-2`}>
                 <div className="flex mb-0 justify-between">
                     <h5 className="font-bold">{rec.word}</h5>

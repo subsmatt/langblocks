@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from "uuid";
 function useEntityCards(url: string, errorNotificationFn: (err: string) => void) {
     const initRecord = {
         "id": "0",
-        "cid": "0",
         "lang": "es",
         "word": "init word",
         "desc_lang": "en",
@@ -28,7 +27,7 @@ function useEntityCards(url: string, errorNotificationFn: (err: string) => void)
     function createCardEntity(aoRec: IRecord) {
         console.log(`INFO: createCardEntity...`);
         const cardId = uuidv4();
-        const newRecord = {...aoRec, id: "", cid: cardId};
+        const newRecord = {...aoRec, id: cardId};
 
         createRecord("/api/cards", newRecord);
         return cardId;
@@ -36,10 +35,9 @@ function useEntityCards(url: string, errorNotificationFn: (err: string) => void)
 
     function updateCardEntity(aoRec: IRecord) {
         const updatedRecord = {...aoRec};
+        console.log(`updateCardEntity id[${aoRec.id}]`)
         if (aoRec.id !== undefined && aoRec.id !== "0") {
             updateRecord(aoRec.id, updatedRecord);
-        } else if (aoRec.cid !== undefined && aoRec.cid !== "0") {
-            updateRecord(aoRec.cid, updatedRecord);
         }
     }
 

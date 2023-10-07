@@ -22,7 +22,7 @@ function CardList() {
                         }
                     }).map(function(rec){                        
                         return (
-                            <Card key={rec.cid ?? rec.id} rec={rec} />
+                            <Card key={rec.id} rec={rec} />
                         );
                     })
                 }

@@ -17,7 +17,6 @@ function CardModalFooter(){
     
     const schemaRecord: IRecord = {
         id: "0", 
-        cid: modalCardId,
         lang: "es",
         word: modalCardWord,
         desc_lang: "en",
@@ -65,7 +64,7 @@ function CardModalFooter(){
                 type="button"
                 className="inline-flex w-full justify-center rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 sm:ml-3 sm:w-auto"
                 onClick={() => {
-                    updateCard({...schemaRecord, word: modalCardWord, desc: modalCardDesc, type: modalCardWordType}, updateDoneCB);
+                    updateCard({...schemaRecord, id: modalCardId, word: modalCardWord, desc: modalCardDesc, type: modalCardWordType}, updateDoneCB);
                     closeModal();
                 }}
             >

@@ -8,8 +8,8 @@ datasource db {
 }
 
 model Cards {
-    id String @id @default(auto()) @map("_id") @db.ObjectId
-    cid String?
+    mid String @id @default(auto()) @map("_id") @db.ObjectId
+    id String @unique
     lang String
     word String
     desc_lang String
@@ -17,5 +17,6 @@ model Cards {
     type String
     hits Int
     examples String[]
-    iknowthis Boolean?
+    iknowthis Boolean @default(false)
+    createdAt DateTime? @default(now())
 }
