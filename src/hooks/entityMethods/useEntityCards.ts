@@ -35,7 +35,8 @@ function useEntityCards(url: string, errorNotificationFn: (err: string) => void)
 
     function updateCardEntity(aoRec: IRecord) {
         const updatedRecord = {...aoRec};
-        console.log(`updateCardEntity id[${aoRec.id}]`)
+        console.log(`updateCardEntity id[${aoRec.id}] lang[${aoRec.lang}] word[${aoRec.word}] desc[${aoRec.desc}] type[${aoRec.type}] hits[${aoRec.hits}] iknowthis[${aoRec.iknowthis}]`);
+        
         if (aoRec.id !== undefined && aoRec.id !== "0") {
             updateRecord(aoRec.id, updatedRecord);
         }

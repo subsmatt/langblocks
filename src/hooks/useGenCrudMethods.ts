@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { IRecord } from "@/types/card";
+import { IEntry, IRecord, IRecordAttribute } from "@/types/card";
 
-function useGenCrudMethods(url: string, errorNotificationFn: (err: string) => void, initData: IRecord[]) {
+function useGenCrudMethods<T extends IEntry>(url: string, errorNotificationFn: (err: string) => void, initData: T[]) {
 
     const lsFuncName = "useGenCrudMethods";
-    const blankData: IRecord[] = [];
+    const blankData: T[] = [];
     const [data, setData] = useState(blankData);
     const [error, setError] = useState("");
-    
+
     if((!url || url.length === 0) && !initData) {
         throw "useGenCrudMethods NO URL passed in";
     }
@@ -17,11 +17,13 @@ function useGenCrudMethods(url: string, errorNotificationFn: (err: string) => vo
         async function getData() {
             try {
                 if (url && url !== "skip") {
-                    const results = await axios.get(url);                    
+                    const results = await axios.get(url);
+                    console.log(`sms>useGenCrudMethods url[${url}] results[${results}]`)                    
                     setData(results.data);
-                } else {
-                    setData(initData);
-                }
+                } 
+                // else {
+                //     setData(initData);
+                // }
             }
             catch (e){
                 console.log(`ERROR:${lsFuncName} `, e);
@@ -29,9 +31,9 @@ function useGenCrudMethods(url: string, errorNotificationFn: (err: string) => vo
         }
         
         getData();
-    }, [url, initData]);
+    }, [url]);
 
-    function createRecord(url: string, createObject: IRecord) {
+    function createRecord(url: string, createObject: T) {
         async function addData(){
             try {
                 const newObject = {...createObject, mid: undefined};
@@ -50,7 +52,7 @@ function useGenCrudMethods(url: string, errorNotificationFn: (err: string) => vo
         addData();
     }
 
-    function updateRecord(id: string, updateObject: IRecord) {
+    function updateRecord(id: string, updateObject: T) {
         console.log(`INFO>useGenCrudMethods updateRecord...`);
         async function updateData(){
             try {

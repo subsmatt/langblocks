@@ -1,4 +1,4 @@
-import { IRecord } from "@/types/card";
+import { IRecord, IRecordAttribute } from "@/types/card";
 import { createContext, useContext, useState } from "react";
 import useCards from "@/hooks/useCards";
 
@@ -9,8 +9,10 @@ interface Props {
 interface ICardsContextValues {
     cardsData: IRecord[],
     //cardsDataError: "",
+    cardAttributesData: IRecordAttribute[],
+    //cardAttributesDataError: "",
     createCard: (aoRec: IRecord, doneCallback: () => void) => void,
-    updateCard: (aoRec: IRecord, doneCallback: () => void) => void,
+    updateCard: (aoRec: IRecord, doneCallback: () => void, pinned: number, important: number) => void,
     deleteCard: (asId: string, doneCallback: () => void) => void
 }
 
@@ -22,10 +24,10 @@ function errorNotificationFn(errorMessage: string) {
 }
 
 function CardsProvider({children}: Props) {    
-    const {cardsData, createCard, updateCard, deleteCard} = useCards(errorNotificationFn);
+    const {cardsData, cardAttributesData, createCard, updateCard, deleteCard} = useCards(errorNotificationFn);
 
     return (
-        <Provider value={{cardsData, createCard, updateCard, deleteCard}}>
+        <Provider value={{cardsData, cardAttributesData, createCard, updateCard, deleteCard}}>
             {children}
         </Provider>
     );

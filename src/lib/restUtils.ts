@@ -1,15 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import prisma, {errorFormat} from "./prisma";
+//import { dbEntity } from '@/types/card';
 
-export async function processGetAndPost(dbEntity: string, req: NextApiRequest, res: NextApiResponse) {
+export async function processGetAndPost(dbEntityType: string, req: NextApiRequest, res: NextApiResponse) {
     const { method} = req;
 
     switch(method) {
         case "GET":
-            await handleGet(dbEntity, res);
+            await handleGet(dbEntityType, res);
             break;
         case "POST":
-            await handlePost(dbEntity, req, res);
+            await handlePost(dbEntityType, req, res);
             break;
         default:
             res.setHeader("Allow", ["GET", "POST"]);
@@ -17,10 +18,19 @@ export async function processGetAndPost(dbEntity: string, req: NextApiRequest, r
     }
 }
 
-export async function handleGet(dbEntity: string, res: NextApiResponse) {
-    
+export async function handleGet(dbEntityType: string, res: NextApiResponse) {
+    let data;
     try {
-        const data = await prisma.cards.findMany();
+        switch (dbEntityType) {
+            case "cards": 
+                data = await prisma.cards.findMany();
+                break;
+            case "cardattributes":
+                data = await prisma.cardAttributes.findMany();
+                break;
+            default:
+                break;                
+        } 
         
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify(data ?? [], null, "\t"));
@@ -29,9 +39,20 @@ export async function handleGet(dbEntity: string, res: NextApiResponse) {
     }
 }
 
-export async function handlePost(dbEntity: string, req: NextApiRequest, res: NextApiResponse) {
+export async function handlePost(dbEntityType: string, req: NextApiRequest, res: NextApiResponse) {
+    console.log(`sms>handlePost dbEntityType[${dbEntityType}]`)
+    let data;
     try {
-        const data = await prisma.cards.create({data: {...req.body}});
+        switch (dbEntityType) {
+            case "cards": 
+                data = await prisma.cards.create({data: {...req.body}});
+                break;
+            case "cardattributes":
+                data = await prisma.cardAttributes.create({data: {...req.body}});
+                break;
+            default:
+                break;                
+        }
 
         res.setHeader("Content-Type", "application/json");
         res.status(200).end(JSON.stringify(data, null, "\t"));
@@ -41,18 +62,18 @@ export async function handlePost(dbEntity: string, req: NextApiRequest, res: Nex
 }
 
 // processGetOnePutAndDelete
-export async function processGetOnePutAndDelete(dbEntity: string, req: NextApiRequest, res: NextApiResponse){
+export async function processGetOnePutAndDelete(dbEntityType: string, req: NextApiRequest, res: NextApiResponse){
     const { method } = req;
 
     switch(method) {
         case "GET":
-            await handleGetOne(dbEntity, req, res);
+            await handleGetOne(dbEntityType, req, res);
             break;
         case "PUT":
-            await handlePut(dbEntity, req, res);
+            await handlePut(dbEntityType, req, res);
             break;
         case "DELETE":
-            await handleDelete(dbEntity, req, res);
+            await handleDelete(dbEntityType, req, res);
             break;
         default:
             res.setHeader("Allow", ["GET", "PUT", "DELETE"]);
@@ -60,7 +81,7 @@ export async function processGetOnePutAndDelete(dbEntity: string, req: NextApiRe
     }
 }
 
-export async function handleGetOne(dbEntity: string, req: NextApiRequest, res: NextApiResponse) {
+export async function handleGetOne(dbEntityType: string, req: NextApiRequest, res: NextApiResponse) {
     try {
         const primaryKeyId = req?.query?.id?.toString() ?? "ID-REQUIRED-NOT-FOUND";
         const data = await prisma.cards.findMany({
@@ -74,16 +95,34 @@ export async function handleGetOne(dbEntity: string, req: NextApiRequest, res: N
     }
 }
 
-export async function handlePut(dbEntity: string, req: NextApiRequest, res: NextApiResponse) {
+export async function handlePut(dbEntityType: string, req: NextApiRequest, res: NextApiResponse) {
     try {
         const primaryKeyId = req?.query?.id?.toString() ?? "ID-REQUIRED-NOT-FOUND";
         let loReqBody = {...req.body};
         delete loReqBody.id;
         
-        const data = await prisma.cards.update({
-            where: {id: primaryKeyId},
-            data: {...loReqBody}
-        });
+        let data;
+        switch (dbEntityType) {
+            case "cards": 
+                data = await prisma.cards.update({
+                    where: {id: primaryKeyId},
+                    data: {...loReqBody}
+                });
+                break;
+            case "cardattributes":
+                data = await prisma.cardAttributes.update({
+                    where: {id: primaryKeyId},
+                    data: {...loReqBody}
+                });
+                break;
+            default:
+                break;                
+        }
+
+        // const data = await prisma.cards.update({
+        //     where: {id: primaryKeyId},
+        //     data: {...loReqBody}
+        // });
 
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify({id: primaryKeyId, title: "handlePut title"}, null, "\t"));
@@ -92,7 +131,7 @@ export async function handlePut(dbEntity: string, req: NextApiRequest, res: Next
     }
 }
 
-export async function handleDelete(dbEntity: string, req: NextApiRequest, res: NextApiResponse) {
+export async function handleDelete(dbEntityType: string, req: NextApiRequest, res: NextApiResponse) {
     try {
         const primaryKeyId = req?.query?.id?.toString() ?? "ID-REQUIRED-NOT-FOUND";        
         const data = await prisma.cards.delete({

@@ -1,5 +1,6 @@
 import { IRecord } from "@/types/card";
 import useEntityCards from "./entityMethods/useEntityCards";
+import useEntityCardAttributes from "./entityMethods/useEntityCardAttributes";
 
 function useCards(errorNotificationFn: (err: string) => void) {
     const {
@@ -9,6 +10,13 @@ function useCards(errorNotificationFn: (err: string) => void) {
         updateCardEntity,
         deleteCardEntity,
     } = useEntityCards("/api/cards", errorNotificationFn);
+
+    const {
+        data: cardAttributesData,
+        error: cardAttributesDataError,
+        updateCardAttributesEntity,
+        deleteCardAttributesEntity,
+    } = useEntityCardAttributes("/api/cardattributes", errorNotificationFn);
 
     function createCard(aoRec: IRecord, doneCallback: () => void){
         const lsFuncName = "useCard>createCard";
@@ -21,12 +29,14 @@ function useCards(errorNotificationFn: (err: string) => void) {
         }
     }
 
-    function updateCard(aoRec: IRecord, doneCallback: () => void){
+    function updateCard(aoRec: IRecord, doneCallback: () => void, pinned: number, important: number){
         const lsFuncName = "useCard>updateCard";
         
         if (aoRec && aoRec.id) {
             console.log(`call updateCardEntity id[${aoRec.id}]...`);
+            //debugger;
             updateCardEntity(aoRec);
+            updateCardAttributesEntity(aoRec.id, pinned, important);
 
             if (doneCallback) {
                 doneCallback();
@@ -49,7 +59,8 @@ function useCards(errorNotificationFn: (err: string) => void) {
     }
 
     return {
-        cardsData, 
+        cardsData,
+        cardAttributesData,
         createCard, 
         updateCard, 
         deleteCard
