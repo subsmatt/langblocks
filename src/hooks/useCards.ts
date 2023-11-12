@@ -1,6 +1,7 @@
 import { IRecord } from "@/types/card";
 import useEntityCards from "./entityMethods/useEntityCards";
 import useEntityCardAttributes from "./entityMethods/useEntityCardAttributes";
+import useEntityChangeLogs from "./entityMethods/useEntityChangeLogs";
 
 function useCards(errorNotificationFn: (err: string) => void) {
     const {
@@ -18,12 +19,22 @@ function useCards(errorNotificationFn: (err: string) => void) {
         deleteCardAttributesEntity,
     } = useEntityCardAttributes("/api/cardattributes", errorNotificationFn);
 
+    const {
+        data: cardChangeLogsData,
+        error: cardChangeLogsError,
+        createCardChangeLogEntity
+    } = useEntityChangeLogs("/api/changelogs", errorNotificationFn);
+
     function createCard(aoRec: IRecord, doneCallback: () => void){
         const lsFuncName = "useCard>createCard";
         
         // Check if records is in correct format
         if(aoRec && (aoRec.word && aoRec.desc)) {
             const cardId = createCardEntity(aoRec);
+            if (cardId) {
+                console.log(`sms>createCardChangeLogEntity...`);
+                createCardChangeLogEntity(cardId, "CREATE");
+            }
         } else {
             console.log(`ERROR:${lsFuncName} - Malformed record`);
         }
@@ -37,6 +48,7 @@ function useCards(errorNotificationFn: (err: string) => void) {
             //debugger;
             updateCardEntity(aoRec);
             updateCardAttributesEntity(aoRec.id, pinned, important);
+            createCardChangeLogEntity(aoRec.id, "UPDATE");
 
             if (doneCallback) {
                 doneCallback();

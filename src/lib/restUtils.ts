@@ -28,6 +28,9 @@ export async function handleGet(dbEntityType: string, res: NextApiResponse) {
             case "cardattributes":
                 data = await prisma.cardAttributes.findMany();
                 break;
+            case "changelogs":
+                data = await prisma.changeLogs.findMany();
+                break;
             default:
                 break;                
         } 
@@ -49,6 +52,9 @@ export async function handlePost(dbEntityType: string, req: NextApiRequest, res:
                 break;
             case "cardattributes":
                 data = await prisma.cardAttributes.create({data: {...req.body}});
+                break;
+            case "changelogs":
+                data = await prisma.changeLogs.create({data: {...req.body}});
                 break;
             default:
                 break;                

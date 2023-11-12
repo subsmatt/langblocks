@@ -22,11 +22,19 @@ export interface IRecordAttribute {
     updateDate: string
 }
 
+export interface IRecordChangeLog {
+    id: string,
+    cardId: string,
+    operation: string,
+    changeDate: string
+}
+
 export interface ICard {
     rec: IRecord
 }
 
 declare enum dbEntity {
     Cards = "cards",
-    cardAttributes = "cardattributes"
+    cardAttributes = "cardattributes",
+    changeLogs = "changelogs"
 }

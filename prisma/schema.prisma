@@ -29,3 +29,11 @@ model CardAttributes {
     pinned Int
     updateDate String
 }
+
+model ChangeLogs {
+    mid String @id @default(auto()) @map("_id") @db.ObjectId
+    id String @unique
+    cardId String
+    operation String
+    changeDate String
+}
