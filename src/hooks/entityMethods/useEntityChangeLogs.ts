@@ -3,8 +3,6 @@ import useGenCrudMethods from "../useGenCrudMethods";
 import { v4 as uuidv4 } from "uuid";
 
 function useEntityChangeLogs(url: string, errorNotificationFn: (err: string) => void) {
-    console.log(`sms>useEntityChangeLogs...`);
-
     const initRecordChangeLog = {
         "id": "0",
         "cardId": "0",

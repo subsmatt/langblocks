@@ -8,8 +8,6 @@ function CardList() {
 
     // Use data from CardsContext
     const {cardsData, cardAttributesData} = useCardsContext();
-    
-    console.log(`sms>CardList: cardsData[${cardsData}] cardAttributesData[${cardAttributesData}]`);
 
     // Show Error and abort if loading failed
     if ( !(cardsData && cardAttributesData)) {

@@ -37,3 +37,17 @@ model ChangeLogs {
     operation String
     changeDate String
 }
+
+model TagOnCard {
+    mid String @id @default(auto()) @map("_id") @db.ObjectId
+    id String @unique
+    tagId String
+    cardId String
+    createdAt String
+}
+
+model Tags {
+    mid String @id @default(auto()) @map("_id") @db.ObjectId
+    id String @unique
+    tagName String
+}

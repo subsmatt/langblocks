@@ -5,6 +5,7 @@ import { useCardModalContext } from '@/context/CardModalContext';
 import CardModalHeader from "./CardModalHeader";
 import CardModalFooter from "./CardModalFooter";
 import CardModalBody from "./CardModalBody";
+import CardModalTags from './CardModalTags';
 
 function CardModal(){
     const cancelButtonRef = useRef(null);
@@ -40,6 +41,7 @@ function CardModal(){
                     <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                         <CardModalHeader />
                         <CardModalBody />
+                        <CardModalTags />
                         <CardModalFooter />
                     </Dialog.Panel>
                     </Transition.Child>

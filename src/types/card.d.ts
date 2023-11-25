@@ -29,6 +29,18 @@ export interface IRecordChangeLog {
     changeDate: string
 }
 
+export interface IRecordTagOnCard {
+    id: string,
+    tagId: string,
+    cardId: string,
+    createdAt: string
+}
+
+export interface IRecordTag {
+    id: string,
+    tagName: string
+}
+
 export interface ICard {
     rec: IRecord
 }

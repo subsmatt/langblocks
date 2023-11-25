@@ -31,6 +31,12 @@ export async function handleGet(dbEntityType: string, res: NextApiResponse) {
             case "changelogs":
                 data = await prisma.changeLogs.findMany();
                 break;
+            case "tagoncard":
+                data = await prisma.tagOnCard.findMany();
+                break;
+            case "tags":
+                data = await prisma.tags.findMany();
+                break;
             default:
                 break;                
         } 
@@ -55,6 +61,12 @@ export async function handlePost(dbEntityType: string, req: NextApiRequest, res:
                 break;
             case "changelogs":
                 data = await prisma.changeLogs.create({data: {...req.body}});
+                break;
+            case "tagoncard":
+                data = await prisma.tagOnCard.create({data: {...req.body}});
+                break;
+            case "tags":
+                data = await prisma.tags.create({data: {...req.body}});
                 break;
             default:
                 break;                
@@ -89,10 +101,41 @@ export async function processGetOnePutAndDelete(dbEntityType: string, req: NextA
 
 export async function handleGetOne(dbEntityType: string, req: NextApiRequest, res: NextApiResponse) {
     try {
+        let data;
         const primaryKeyId = req?.query?.id?.toString() ?? "ID-REQUIRED-NOT-FOUND";
-        const data = await prisma.cards.findMany({
-            where: {id: primaryKeyId}
-        });
+
+        switch (dbEntityType) {
+            case "cards": 
+                data = await prisma.cards.findMany({
+                    where: {id: primaryKeyId}
+                });
+                break;
+            case "cardattributes":
+                data = await prisma.cardAttributes.findMany({
+                    where: {id: primaryKeyId}
+                });
+                break;
+            case "changelogs":
+                data = await prisma.changeLogs.findMany({
+                    where: {id: primaryKeyId}
+                });
+                break;
+            case "tagoncard":
+                data = await prisma.tagOnCard.findMany({
+                    where: {id: primaryKeyId}
+                });
+                break;
+            case "tags":
+                data = await prisma.tags.findMany({
+                    where: {id: primaryKeyId}
+                });
+                break;
+            default:
+                break;                
+        }
+        // const data = await prisma.cards.findMany({
+        //     where: {id: primaryKeyId}
+        // });
 
         res.setHeader("Content-Type", "application/json");
         res.end(JSON.stringify({id: primaryKeyId, title: "handleGetOne title"}, null, "\t"));
@@ -121,6 +164,24 @@ export async function handlePut(dbEntityType: string, req: NextApiRequest, res: 
                     data: {...loReqBody}
                 });
                 break;
+            case "changelogs":
+                data = await prisma.changeLogs.update({
+                    where: {id: primaryKeyId},
+                    data: {...loReqBody}
+                });
+                break;
+            case "tagoncard":
+                data = await prisma.tagOnCard.update({
+                    where: {id: primaryKeyId},
+                    data: {...loReqBody}
+                });
+                break;
+            case "tags":
+                data = await prisma.tags.update({
+                    where: {id: primaryKeyId},
+                    data: {...loReqBody}
+                });
+                break;
             default:
                 break;                
         }
@@ -140,9 +201,41 @@ export async function handlePut(dbEntityType: string, req: NextApiRequest, res: 
 export async function handleDelete(dbEntityType: string, req: NextApiRequest, res: NextApiResponse) {
     try {
         const primaryKeyId = req?.query?.id?.toString() ?? "ID-REQUIRED-NOT-FOUND";        
-        const data = await prisma.cards.delete({
-            where: { id: primaryKeyId }
-        });
+        
+        let data;
+        switch (dbEntityType) {
+            case "cards": 
+                data = await prisma.cards.delete({
+                    where: { id: primaryKeyId }
+                });
+                break;
+            case "cardattributes":
+                data = await prisma.cardAttributes.delete({
+                    where: { id: primaryKeyId }
+                });
+                break;
+            case "changelogs":
+                data = await prisma.changeLogs.delete({
+                    where: { id: primaryKeyId }
+                });
+                break;
+            case "tagoncard":
+                data = await prisma.tagOnCard.delete({
+                    where: { id: primaryKeyId }
+                });
+                break;
+            case "tags":
+                data = await prisma.tags.delete({
+                    where: { id: primaryKeyId }
+                });
+                break;
+            default:
+                break;                
+        }
+
+        // const data = await prisma.cards.delete({
+        //     where: { id: primaryKeyId }
+        // });
 
         res.setHeader("Content-Type", "application/json");
         res.status(200).end(JSON.stringify(data, null, "\t"));

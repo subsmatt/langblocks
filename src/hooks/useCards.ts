@@ -2,6 +2,8 @@ import { IRecord } from "@/types/card";
 import useEntityCards from "./entityMethods/useEntityCards";
 import useEntityCardAttributes from "./entityMethods/useEntityCardAttributes";
 import useEntityChangeLogs from "./entityMethods/useEntityChangeLogs";
+import useEntityTagOnCard from "./entityMethods/useEntityTagOnCard";
+import useEntityTags from "./entityMethods/useEntityTags";
 
 function useCards(errorNotificationFn: (err: string) => void) {
     const {
@@ -25,30 +27,50 @@ function useCards(errorNotificationFn: (err: string) => void) {
         createCardChangeLogEntity
     } = useEntityChangeLogs("/api/changelogs", errorNotificationFn);
 
-    function createCard(aoRec: IRecord, doneCallback: () => void){
+    const {
+        data: tagsData,
+        error: tagsDataError,
+        createTagsAndMerge
+    } = useEntityTags("/api/tags", errorNotificationFn);
+
+    const {
+        data: tagOnCardData,
+        error: tagOnCardDataError,
+        updateCardTags,
+        deleteTagOnCardByCardId
+    } = useEntityTagOnCard("/api/tagoncard", errorNotificationFn);
+
+    function createCard(aoRec: IRecord, tagIdsIn: string[], tagNamesIn: string, doneCallback: () => void){
         const lsFuncName = "useCard>createCard";
         
         // Check if records is in correct format
         if(aoRec && (aoRec.word && aoRec.desc)) {
             const cardId = createCardEntity(aoRec);
             if (cardId) {
-                console.log(`sms>createCardChangeLogEntity...`);
                 createCardChangeLogEntity(cardId, "CREATE");
+
+                const tagIds = createTagsAndMerge(tagIdsIn, tagNamesIn);
+
+                updateCardTags(tagIds, cardId);
             }
         } else {
             console.log(`ERROR:${lsFuncName} - Malformed record`);
         }
     }
 
-    function updateCard(aoRec: IRecord, doneCallback: () => void, pinned: number, important: number){
+    function updateCard(aoRec: IRecord, doneCallback: () => void, pinned: number, important: number, tagIdsIn: string[], tagNamesIn: string){
         const lsFuncName = "useCard>updateCard";
         
         if (aoRec && aoRec.id) {
-            console.log(`call updateCardEntity id[${aoRec.id}]...`);
-            //debugger;
             updateCardEntity(aoRec);
             updateCardAttributesEntity(aoRec.id, pinned, important);
             createCardChangeLogEntity(aoRec.id, "UPDATE");
+
+            // Only update tag info if either tagIdsIn or tagNamesIn is provided
+            if (tagIdsIn.length > 0 || tagNamesIn) {
+                const tagIds = createTagsAndMerge(tagIdsIn, tagNamesIn);
+                updateCardTags(tagIds, aoRec.id);
+            }
 
             if (doneCallback) {
                 doneCallback();
@@ -60,11 +82,12 @@ function useCards(errorNotificationFn: (err: string) => void) {
 
     function deleteCard(asId: string, doneCallback: () => void){
         const lsFuncName = "useCard>deleteCard";
-        console.log(`INFO:${lsFuncName}`);
         
         // Check if Id is valid
         if(asId) {
             deleteCardEntity(asId);
+            deleteCardAttributesEntity(asId);
+            deleteTagOnCardByCardId(asId);
         } else {
             console.log(`ERROR:${lsFuncName} - Invalid Id`);
         }
@@ -73,6 +96,8 @@ function useCards(errorNotificationFn: (err: string) => void) {
     return {
         cardsData,
         cardAttributesData,
+        tagOnCardData,
+        tagsData,
         createCard, 
         updateCard, 
         deleteCard

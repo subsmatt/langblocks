@@ -1,12 +1,8 @@
 import { IRecordAttribute } from "@/types/card";
 import useGenCrudMethods from "../useGenCrudMethods";
-//import { sampleAttributesData } from "../../data/sampleAttributesData";
-//import MongoId from "mongoid-js";
 import { v4 as uuidv4 } from "uuid";
 
 function useEntityCardAttributes(url: string, errorNotificationFn: (err: string) => void) {
-    console.log(`sms>useEntityCardAttributes...`);
-
     const initRecordAttribute = {
         "id": "0",
         "cardId": "0",
@@ -17,8 +13,7 @@ function useEntityCardAttributes(url: string, errorNotificationFn: (err: string)
     const initData: IRecordAttribute[] = [initRecordAttribute];
 
     const {data, error, createRecord, updateRecord, deleteRecord} =  useGenCrudMethods(url, errorNotificationFn, initData);
-    console.log(`sms>useEntityCardAttributes data[${data}]`);
-
+    
     function updateCardAttributesEntity(cardId: string, pinned: number, important: number){
         // check if Attributes record exists
         const cardAttributes = data.find(rec => rec.cardId === cardId);

@@ -18,7 +18,7 @@ function useGenCrudMethods<T extends IEntry>(url: string, errorNotificationFn: (
             try {
                 if (url && url !== "skip") {
                     const results = await axios.get(url);
-                    console.log(`sms>useGenCrudMethods url[${url}] results[${results}]`)                    
+                    //console.log(`sms>useGenCrudMethods url[${url}] results[${results}]`)                    
                     setData(results.data);
                 } 
                 // else {
@@ -53,7 +53,6 @@ function useGenCrudMethods<T extends IEntry>(url: string, errorNotificationFn: (
     }
 
     function updateRecord(id: string, updateObject: T) {
-        console.log(`INFO>useGenCrudMethods updateRecord...`);
         async function updateData(){
             try {
                 await axios.put(`${url}/${id}`, updateObject);
@@ -75,7 +74,6 @@ function useGenCrudMethods<T extends IEntry>(url: string, errorNotificationFn: (
     }
 
     function deleteRecord(id: string) {
-        console.log(`INFO>useGenCrudMethods deleteRecord...`);
         async function deleteData(){
             try {
                 await axios.delete(`${url}/${id}`);

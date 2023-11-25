@@ -12,7 +12,9 @@ function CardModalFooter(){
         modalCardDesc, 
         setModalCardDesc, 
         modalCardWordType, 
-        setModalCardWordType
+        setModalCardWordType,
+        modalCardTagIds,
+        tagNamesNewValue
     } = useCardModalContext();
     
     const schemaRecord: IRecord = {
@@ -52,7 +54,7 @@ function CardModalFooter(){
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 sm:ml-3 sm:w-auto"
                     onClick={() => {
-                        createCard(schemaRecord, createDoneCB);
+                        createCard(schemaRecord, modalCardTagIds, tagNamesNewValue, createDoneCB);
                         closeModal();
                     }}
                 >
@@ -64,7 +66,7 @@ function CardModalFooter(){
                 type="button"
                 className="inline-flex w-full justify-center rounded-md bg-yellow-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 sm:ml-3 sm:w-auto"
                 onClick={() => {
-                    updateCard({...schemaRecord, id: modalCardId, word: modalCardWord, desc: modalCardDesc, type: modalCardWordType}, updateDoneCB, 0, 0);
+                    updateCard({...schemaRecord, id: modalCardId, word: modalCardWord, desc: modalCardDesc, type: modalCardWordType}, updateDoneCB, 0, 0, modalCardTagIds, tagNamesNewValue);
                     closeModal();
                 }}
             >

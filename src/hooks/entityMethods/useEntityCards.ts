@@ -25,7 +25,6 @@ function useEntityCards(url: string, errorNotificationFn: (err: string) => void)
     } = useGenCrudMethods(url, errorNotificationFn, initData);
 
     function createCardEntity(aoRec: IRecord) {
-        console.log(`INFO: createCardEntity...`);
         const cardId = uuidv4();
         const newRecord = {...aoRec, id: cardId};
 
@@ -35,7 +34,6 @@ function useEntityCards(url: string, errorNotificationFn: (err: string) => void)
 
     function updateCardEntity(aoRec: IRecord) {
         const updatedRecord = {...aoRec};
-        console.log(`updateCardEntity id[${aoRec.id}] lang[${aoRec.lang}] word[${aoRec.word}] desc[${aoRec.desc}] type[${aoRec.type}] hits[${aoRec.hits}] iknowthis[${aoRec.iknowthis}]`);
         
         if (aoRec.id !== undefined && aoRec.id !== "0") {
             updateRecord(aoRec.id, updatedRecord);
@@ -43,7 +41,6 @@ function useEntityCards(url: string, errorNotificationFn: (err: string) => void)
     }
 
     function deleteCardEntity(asId: string) {
-        console.log(`INFO: deleteCardEntity...`);
         deleteRecord(asId);
     }
 
