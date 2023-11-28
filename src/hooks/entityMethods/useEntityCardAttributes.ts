@@ -19,7 +19,7 @@ function useEntityCardAttributes(url: string, errorNotificationFn: (err: string)
         const cardAttributes = data.find(rec => rec.cardId === cardId);
         
         if (cardAttributes){
-            if (pinned !== undefined && important !== undefined) {
+            if (pinned !== -1 && important !== -1) {
                 const updatedRecord = {id: cardAttributes.id, cardId: cardAttributes.cardId, pinned: pinned,
                     important: important,
                     updateDate: new Date().toISOString()

@@ -67,7 +67,7 @@ function useCards(errorNotificationFn: (err: string) => void) {
             createCardChangeLogEntity(aoRec.id, "UPDATE");
 
             // Only update tag info if either tagIdsIn or tagNamesIn is provided
-            if (tagIdsIn.length > 0 || tagNamesIn) {
+            if (tagNamesIn !== "CLEARALL") {
                 const tagIds = createTagsAndMerge(tagIdsIn, tagNamesIn);
                 updateCardTags(tagIds, aoRec.id);
             }

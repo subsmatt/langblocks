@@ -3,7 +3,7 @@ import { PlusIcon } from '@heroicons/react/24/outline';
 import { useCardModalContext } from '@/context/CardModalContext';
 
 function CardAdd(){
-    const {setModalShow, setModalCardId, setModalCardWord, setModalCardDesc, setModalCardWordType} = useCardModalContext();
+    const {setModalShow, setModalCardId, setModalCardWord, setModalCardDesc, setModalCardWordType, setTagNamesNewValue, setModalCardTagIds} = useCardModalContext();
 
     function createCard(){
         setModalCardId("0");
@@ -11,6 +11,8 @@ function CardAdd(){
         setModalCardDesc("");
         setModalCardWordType("noun");
         setModalShow(true);
+        setTagNamesNewValue("");
+        setModalCardTagIds([]);
     }
 
     return (

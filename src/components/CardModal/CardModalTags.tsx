@@ -3,7 +3,6 @@ import { useCardModalContext } from "../../context/CardModalContext";
 import { useCardsContext } from "@/context/CardsContext";
 
 function CardModalTags(){
-    //const {modalCardTagIds, setModalCardTagIds, tagNamesNewValue, setTagNamesNewValue} = useContext(CardModalContext);
     const {
         modalCardTagIds,
         setModalCardTagIds,
@@ -11,7 +10,6 @@ function CardModalTags(){
         setTagNamesNewValue
     } = useCardModalContext();
 
-    //const {tagsData} = useContext(CardsContext);
     const { tagsData } = useCardsContext();
 
     if (!modalCardTagIds && !tagsData) return null;

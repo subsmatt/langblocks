@@ -1,7 +1,7 @@
 import { useCardModalContext } from "../context/CardModalContext";
 import { useCardsContext } from "@/context/CardsContext";
 import { ICard, IRecord } from "@/types/card";
-import { PencilSquareIcon, TrashIcon, StarIcon } from '@heroicons/react/24/outline';
+import { PencilSquareIcon, TrashIcon, StarIcon, XCircleIcon } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from "@heroicons/react/24/solid";
 
 function Card(props: ICard) {
@@ -74,6 +74,7 @@ function Card(props: ICard) {
             console.log(`sms>blankCallback...`);
             return;
         }
+        
         return (
             <div className="d-flex">
                 {
@@ -85,8 +86,10 @@ function Card(props: ICard) {
                                     {cardTag.tagName}&nbsp;
                                     <a href="#" className="text-decoration-none fa me-2" onClick={() => {
                                         const tagIdsForCard = cardTags.filter(r => r.tagId !== cardTag.tagId).map(t => t.tagId);
-                                        updateCard(rec, blankCallback, Number(cardPinned), Number(cardImportant), tagIdsForCard, "");
-                                    }}>{" "}<i className="icon fa fa-times-circle"></i></a>{" "}
+                                        updateCard({...schemaRecord}, blankCallback, Number(cardPinned), Number(cardImportant), tagIdsForCard, "");                                   
+                                        }}>{" "}
+                                        <XCircleIcon className="h-4 w-4" aria-hidden="true" />    
+                                    </a>{" "}
                                 </span>
                             </div>
                         );
@@ -102,7 +105,7 @@ function Card(props: ICard) {
                 <div className="flex mb-0 justify-between">
                     <h5 className="font-bold">{rec.word}</h5>
                     
-                    <a href="#" className="me-2" onClick={() => { updateCard({...schemaRecord, hits: schemaRecord.hits + 1}, clickStarButtonCallback, Number(!cardPinned), Number(cardImportant), emptyStringArray, ""); }}>
+                    <a href="#" className="me-2" onClick={() => { updateCard({...schemaRecord, hits: schemaRecord.hits + 1}, clickStarButtonCallback, Number(!cardPinned), Number(cardImportant), [], "CLEARALL"); }}>
                         {
                         cardPinned ? <StarSolidIcon className="h-4 w-4" aria-hidden="true" /> : <StarIcon className="h-4 w-4" aria-hidden="true" /> 
                         }

@@ -18,12 +18,8 @@ function useGenCrudMethods<T extends IEntry>(url: string, errorNotificationFn: (
             try {
                 if (url && url !== "skip") {
                     const results = await axios.get(url);
-                    //console.log(`sms>useGenCrudMethods url[${url}] results[${results}]`)                    
                     setData(results.data);
-                } 
-                // else {
-                //     setData(initData);
-                // }
+                }
             }
             catch (e){
                 console.log(`ERROR:${lsFuncName} `, e);
