@@ -76,15 +76,14 @@ function Card(props: ICard) {
         }
         
         return (
-            <div className="d-flex">
+            <div className="flex">
                 {
-                    cardTags.map(cardTag => {
-                        
+                    cardTags.map(cardTag => {                        
                         return (
                             <div key={cardTag.id}>
-                                <span className="textbox-tag small">
-                                    {cardTag.tagName}&nbsp;
-                                    <a href="#" className="text-decoration-none fa me-2" onClick={() => {
+                                <span className="flex">
+                                    {cardTag.tagName}
+                                    <a href="#" className="my-auto ms-1 me-2" onClick={() => {
                                         const tagIdsForCard = cardTags.filter(r => r.tagId !== cardTag.tagId).map(t => t.tagId);
                                         updateCard({...schemaRecord}, blankCallback, Number(cardPinned), Number(cardImportant), tagIdsForCard, "");                                   
                                         }}>{" "}
@@ -117,7 +116,7 @@ function Card(props: ICard) {
                 <div className="">
                     <CardTagsSection />
                 </div>
-                <div className="d-flex justify-content-between">
+                <div className="flex-row justify-content-between">
                     <div className="text-sm">{rec.type}</div>
                     <div className="flex justify-end">
                         <span className="mx-2">

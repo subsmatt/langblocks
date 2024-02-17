@@ -30,7 +30,7 @@ function CardList() {
     return (
         <>
             {/* Display 'Pinned' cards */}
-            <div className="row">
+            <div className="mt-2 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">
                 {cardsData.filter(n => cardsPinned.includes(n.id))
                     .filter(function(rec){
                         if (Object.hasOwn(rec, "word") && rec.word !== null 
@@ -50,7 +50,7 @@ function CardList() {
             </div>
 
             {/* Display horizontal line to separate 'Pinned' and 'Unpinned' cards */}
-            {cardsPinned.length > 0 ? <hr/> : null}
+            {cardsPinned.length > 0 ? <hr className="mt-2 border border-zinc-300"/> : null}
 
             {/* Display 'Unpinned' cards */}          
             <div className="mt-2 grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2">

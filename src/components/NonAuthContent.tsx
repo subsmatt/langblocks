@@ -1,6 +1,6 @@
 function NonAuthContent() {
     return (
-        <div>Non Auth Content</div>
+        <div className="text-center">Non Auth Content</div>
     );
 }
 
