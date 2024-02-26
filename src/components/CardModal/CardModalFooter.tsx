@@ -48,7 +48,7 @@ function CardModalFooter(){
     }
 
     return (
-        <div className="bg-gray-50 mt-5 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+        <div className="bg-gray-50 mt-5 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 dark:bg-slate-200">
             {modalCardId === "0" && (
                 <button
                     type="button"

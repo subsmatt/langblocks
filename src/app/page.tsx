@@ -27,7 +27,7 @@ export default function Home() {
   }
   
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between pt-32 px-8 sm:pt-24 sm:px-14">
+    <main className="flex min-h-screen flex-col items-center justify-between pt-32 px-8 sm:pt-24 sm:px-14 dark:bg-zinc-700">
       <div className="relative z-10 max-w-5xl w-full items-center justify-between font-mono">
         <div className="z-10 fixed left-0 top-0 flex w-full justify-between border-b border-gray-300 bg-gradient-to-b from-zinc-200 p-2 backdrop-blur-2xl dark:border-neutral-800 dark:to-zinc-500">
           <div className="flex justify-start w-2/5 sm:w-1/3">

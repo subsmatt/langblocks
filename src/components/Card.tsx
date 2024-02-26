@@ -100,7 +100,7 @@ function Card(props: ICard) {
     
     return (
         <div className="border border-zinc-300" key={rec.id}>
-            <div className={`p-2`}>
+            <div className="flex flex-col p-2 h-full">
                 <div className="flex mb-0 justify-between">
                     <h5 className="font-bold">{rec.word}</h5>
                     
@@ -116,7 +116,7 @@ function Card(props: ICard) {
                 <div className="">
                     <CardTagsSection />
                 </div>
-                <div className="flex-row justify-content-between">
+                <div className="grow flex justify-between items-end pt-2">
                     <div className="text-sm">{rec.type}</div>
                     <div className="flex justify-end">
                         <span className="mx-2">
